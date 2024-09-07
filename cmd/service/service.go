@@ -3,10 +3,10 @@ package main
 import (
 	"aidanwoods.dev/go-paseto"
 	"context"
+	"encoding/json"
 	"github.com/itsabgr/fak"
 	_ "github.com/joho/godotenv/autoload"
 	"golang.org/x/crypto/sha3"
-	"io"
 	"mauth"
 	"mauth/providers"
 	"net/http"
@@ -41,11 +41,14 @@ func main() {
 	mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		token, err := paseto.NewParser().ParseV4Local(secret, request.URL.Query().Get("code"), nil)
 		if err != nil {
-			http.Error(writer, err.Error(), http.StatusUnauthorized)
+			http.Error(writer, "auth failed", http.StatusUnauthorized)
 			return
 		}
 		emails, _ := token.GetString("emails")
-		io.WriteString(writer, emails)
+		writer.Header().Set("Content-Type", "application/json")
+		writer.Write(fak.Must(json.Marshal(struct {
+			Emails []string `json:"emails"`
+		}{strings.Split(emails, ",")})))
 	})
 	mux.HandleFunc("/resolve", func(writer http.ResponseWriter, request *http.Request) {
 		token, err := paseto.NewParser().ParseV4Local(secret, request.Header.Get("Authorization"), nil)
@@ -54,7 +57,10 @@ func main() {
 			return
 		}
 		emails, _ := token.GetString("emails")
-		io.WriteString(writer, emails)
+		writer.Header().Set("Content-Type", "application/json")
+		writer.Write(fak.Must(json.Marshal(struct {
+			emails []string
+		}{strings.Split(emails, ",")})))
 	})
 
 	mux.HandleFunc("/auth", func(writer http.ResponseWriter, request *http.Request) {
