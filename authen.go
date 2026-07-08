@@ -1,11 +1,12 @@
 package mauth
 
 import (
-	"aidanwoods.dev/go-paseto"
 	"context"
 	"errors"
-	"mauth/providers"
 	"net/url"
+
+	"aidanwoods.dev/go-paseto"
+	"github.com/itsabgr/mauth/providers"
 )
 
 type Authenticator struct {

@@ -1,4 +1,4 @@
-module mauth
+module github.com/itsabgr/mauth
 
 go 1.23.0
 

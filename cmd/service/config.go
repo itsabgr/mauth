@@ -1,9 +1,10 @@
 package main
 
 import (
-	"gopkg.in/yaml.v3"
-	"mauth"
 	"os"
+
+	"github.com/itsabgr/mauth"
+	"gopkg.in/yaml.v3"
 )
 
 var config struct {
