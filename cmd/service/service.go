@@ -1,19 +1,21 @@
 package main
 
 import (
-	"aidanwoods.dev/go-paseto"
 	"context"
 	"encoding/json"
-	"github.com/itsabgr/fak"
-	_ "github.com/joho/godotenv/autoload"
-	"golang.org/x/crypto/sha3"
-	"mauth"
-	"mauth/providers"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/itsabgr/mauth/providers"
+
+	"aidanwoods.dev/go-paseto"
+	"github.com/itsabgr/fak"
+	"github.com/itsabgr/mauth"
+	_ "github.com/joho/godotenv/autoload"
+	"golang.org/x/crypto/sha3"
 )
 
 func urlWithQuery(url *url.URL, k, v string) {

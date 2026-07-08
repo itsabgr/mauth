@@ -1,7 +1,7 @@
 package mauth
 
 import (
-	"mauth/providers"
+	"github.com/itsabgr/mauth/providers"
 )
 
 type ProvidersConfig map[string]struct {
